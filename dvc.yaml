@@ -5,3 +5,14 @@ stages:
     - .\src\data\data_ingestion.py
     outs:
     - .\data\interim\swiggy_cleaned.csv
+  data_preprocessing:
+    cmd: python .\src\data\data_preprocessing.py
+    deps:
+    - .\data\interim\swiggy_cleaned.csv
+    - .\src\data\data_ingestion.py
+    params:
+    - data_preprocessing.random_state
+    - data_preprocessing.test_size
+    outs:
+    - .\data\external\test.csv
+    - .\data\external\train.csv
