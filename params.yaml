@@ -1,3 +1,25 @@
 data_preprocessing:
   test_size: 0.25
   random_state: 42
+
+train:
+  random_forest:
+    n_estimators: 424
+    max_depth: 28
+    max_features: 'sqrt'
+    min_samples_split: 8
+    min_samples_leaf: 6
+    max_samples: 0.8542421813553751
+    verbose: 1
+    n_jobs: -1
+
+  light_gbm:
+    n_estimator: 40
+    max_depth: 11
+    learning_rate: 0.18024722308848545
+    subsample: 0.7972018508352986
+    num_leaves: 118
+    min_child_weight: 14
+    min_split_gain: 0.007311476316166993
+    reg_lambda: 54.73782637648871
+    n_jobs: -1

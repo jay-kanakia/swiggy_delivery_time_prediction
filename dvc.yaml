@@ -26,3 +26,15 @@ stages:
     - .\data\processed\test_trans.csv
     - .\data\processed\train_trans.csv
     - .\models\preprocessor.joblib
+  model_building:
+    cmd: python .\src\models\model_building.py
+    deps:
+    - .\data\processed\train_trans.csv
+    - .\src\models\model_building.py
+    params:
+    - train.light_gbm
+    - train.random_forest
+    outs:
+    - .\models\model.joblib
+    - .\models\power_transformer.joblib
+    - .\models\stacking_regressor.joblib
