@@ -16,3 +16,13 @@ stages:
     outs:
     - .\data\external\test.csv
     - .\data\external\train.csv
+  feature_engineering:
+    cmd: python .\src\features\feature_engineering.py
+    deps:
+    - .\data\external\test.csv
+    - .\data\external\train.csv
+    - .\src\features\feature_engineering.py
+    outs:
+    - .\data\processed\test_trans.csv
+    - .\data\processed\train_trans.csv
+    - .\models\preprocessor.joblib
