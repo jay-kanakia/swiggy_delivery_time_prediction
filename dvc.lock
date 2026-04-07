@@ -12,3 +12,15 @@ stages:
       hash: md5
       md5: 4918716e52fc57babdcd400dfb3c3f29
       size: 4508527
+  data_ingestion:
+    cmd: python .\src\data\data_ingestion.py
+    deps:
+    - path: .\src\data\data_ingestion.py
+      hash: md5
+      md5: ca80dddf69e3b6504269e4a6647e4a40
+      size: 8737
+    outs:
+    - path: .\data\interim\swiggy_cleaned.csv
+      hash: md5
+      md5: 4918716e52fc57babdcd400dfb3c3f29
+      size: 4508527

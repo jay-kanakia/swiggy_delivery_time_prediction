@@ -5,7 +5,7 @@ import logging
 from pathlib import Path
 
 # create logger
-logger = logging.getLogger('data_cleaning')
+logger = logging.getLogger('data_ingestion')
 logger.setLevel(logging.INFO)
 
 ## create console handler
