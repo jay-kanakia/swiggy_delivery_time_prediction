@@ -38,3 +38,11 @@ stages:
     - .\models\model.joblib
     - .\models\power_transformer.joblib
     - .\models\stacking_regressor.joblib
+  model_evaluation:
+    cmd: python .\src\models\model_evaluation.py
+    deps:
+    - .\data\processed\test_trans.csv
+    - .\data\processed\train_trans.csv
+    - .\src\models\model_evaluation.py
+    outs:
+    - run_information.json

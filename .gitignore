@@ -89,3 +89,5 @@ target/
 .mypy_cache/
 
 myenv
+/run_infomation.json
+/run_information.json
