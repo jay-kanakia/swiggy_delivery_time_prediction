@@ -46,3 +46,8 @@ stages:
     - .\src\models\model_evaluation.py
     outs:
     - run_information.json
+  model_stage_change:
+    cmd: python .\src\models\model_stage_change.py
+    deps:
+    - .\run_information.json
+    - .\src\models\model_stage_change.py

@@ -1,5 +1,5 @@
 data_preprocessing:
-  test_size: 0.25
+  test_size: 0.20
   random_state: 42
 
 train:
@@ -14,7 +14,7 @@ train:
     n_jobs: -1
 
   light_gbm:
-    n_estimator: 40
+    n_estimators: 40
     max_depth: 11
     learning_rate: 0.18024722308848545
     subsample: 0.7972018508352986
