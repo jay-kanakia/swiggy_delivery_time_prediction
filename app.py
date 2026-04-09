@@ -60,7 +60,6 @@ stage = 'Staging'
 dagshub.init(repo_owner='jay-kanakia', repo_name='swiggy_delivery_time_prediction', mlflow=True)
 # set tracking uri
 mlflow.set_tracking_uri('https://dagshub.com/jay-kanakia/swiggy_delivery_time_prediction.mlflow')
-# set experiment
 
 # get the latest model version
 client = MlflowClient()
