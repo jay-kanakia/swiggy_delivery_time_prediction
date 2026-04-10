@@ -1,53 +1,58 @@
 stages:
   data_ingestion:
-    cmd: python .\src\data\data_ingestion.py
+    cmd: python src/data/data_ingestion.py
     deps:
-    - .\src\data\data_ingestion.py
+      - src/data/data_ingestion.py
     outs:
-    - .\data\interim\swiggy_cleaned.csv
+      - data/interim/swiggy_cleaned.csv
+
   data_preprocessing:
-    cmd: python .\src\data\data_preprocessing.py
+    cmd: python src/data/data_preprocessing.py
     deps:
-    - .\data\interim\swiggy_cleaned.csv
-    - .\src\data\data_ingestion.py
+      - data/interim/swiggy_cleaned.csv
+      - src/data/data_ingestion.py
     params:
-    - data_preprocessing.random_state
-    - data_preprocessing.test_size
+      - data_preprocessing.random_state
+      - data_preprocessing.test_size
     outs:
-    - .\data\external\test.csv
-    - .\data\external\train.csv
+      - data/external/test.csv
+      - data/external/train.csv
+
   feature_engineering:
-    cmd: python .\src\features\feature_engineering.py
+    cmd: python src/features/feature_engineering.py
     deps:
-    - .\data\external\test.csv
-    - .\data\external\train.csv
-    - .\src\features\feature_engineering.py
+      - data/external/test.csv
+      - data/external/train.csv
+      - src/features/feature_engineering.py
     outs:
-    - .\data\processed\test_trans.csv
-    - .\data\processed\train_trans.csv
-    - .\models\preprocessor.joblib
+      - data/processed/test_trans.csv
+      - data/processed/train_trans.csv
+      - models/preprocessor.joblib
+
   model_building:
-    cmd: python .\src\models\model_building.py
+    cmd: python src/models/model_building.py
     deps:
-    - .\data\processed\train_trans.csv
-    - .\src\models\model_building.py
+      - data/processed/train_trans.csv
+      - src/models/model_building.py
     params:
-    - train.light_gbm
-    - train.random_forest
+      - train.light_gbm
+      - train.random_forest
     outs:
-    - .\models\model.joblib
-    - .\models\power_transformer.joblib
-    - .\models\stacking_regressor.joblib
+      - models/model.joblib
+      - models/power_transformer.joblib
+      - models/stacking_regressor.joblib
+
   model_evaluation:
-    cmd: python .\src\models\model_evaluation.py
+    cmd: python src/models/model_evaluation.py
     deps:
-    - .\data\processed\test_trans.csv
-    - .\data\processed\train_trans.csv
-    - .\src\models\model_evaluation.py
+      - data/processed/test_trans.csv
+      - data/processed/train_trans.csv
+      - src/models/model_evaluation.py
     outs:
-    - run_information.json
+      - run_information.json
+
   model_stage_change:
-    cmd: python .\src\models\model_stage_change.py
+    cmd: python src/models/model_stage_change.py
     deps:
-    - .\run_information.json
-    - .\src\models\model_stage_change.py
+      - run_information.json
+      - src/models/model_stage_change.py
