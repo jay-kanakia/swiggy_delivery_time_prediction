@@ -3,12 +3,28 @@ import logging
 import dagshub
 import mlflow
 import json
+import os
 
 import pandas as pd
 
 from pathlib import Path
 from sklearn.model_selection import cross_val_score
 from sklearn.metrics import mean_absolute_error,r2_score
+from dotenv import load_dotenv
+
+load_dotenv()
+
+dagshub_token=os.getenv('DAGSHUB_TOKEN')
+if not dagshub_token:
+    raise EnvironmentError('DAGSHUB_TOKEN environment variable is not set')
+
+#dagshub_token = dagshub_token.strip()
+print(dagshub_token)
+
+#dagshub.auth.add_app_token(dagshub_token)
+
+os.environ["MLFLOW_TRACKING_USERNAME"] = dagshub_token
+os.environ["MLFLOW_TRACKING_PASSWORD"] = dagshub_token
 
 logger = logging.getLogger('model_evaluation')
 logger.setLevel(logging.INFO)
