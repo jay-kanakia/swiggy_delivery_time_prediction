@@ -6,3 +6,5 @@ mlflow
 xgboost
 lightgbm
 joblib
+pytest
+dvc
