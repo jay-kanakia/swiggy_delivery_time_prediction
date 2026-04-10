@@ -21,7 +21,7 @@ if not dagshub_token:
 dagshub_token = dagshub_token.strip()
 print(dagshub_token)
 
-#dagshub.auth.add_app_token(dagshub_token)
+dagshub.auth.add_app_token(dagshub_token)
 
 os.environ["MLFLOW_TRACKING_USERNAME"] = dagshub_token
 os.environ["MLFLOW_TRACKING_PASSWORD"] = dagshub_token
