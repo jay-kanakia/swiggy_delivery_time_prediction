@@ -18,7 +18,7 @@ dagshub_token=os.getenv('DAGSHUB_TOKEN')
 if not dagshub_token:
     raise EnvironmentError('DAGSHUB_TOKEN environment variable is not set')
 
-#dagshub_token = dagshub_token.strip()
+dagshub_token = dagshub_token.strip()
 print(dagshub_token)
 
 #dagshub.auth.add_app_token(dagshub_token)
@@ -89,7 +89,7 @@ if __name__ == "__main__":
     # load the training and test data
     train_data = load_data(train_data_path)
     test_data = load_data(test_data_path)
-    logging.info('Train and test data loaded successfully')
+    logger.info('Train and test data loaded successfully')
 
     # split the train and test data
     X_train,y_train = make_X_and_y(data=train_data,target_column=TARGET)
