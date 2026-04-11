@@ -6,7 +6,7 @@ train:
   random_forest:
     n_estimators: 424
     max_depth: 28
-    max_features: 'sqrt'
+    max_features: 1
     min_samples_split: 8
     min_samples_leaf: 6
     max_samples: 0.8542421813553751
