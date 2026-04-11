@@ -66,4 +66,30 @@ jobs:
           IMAGE_TAG: latest
         run: |
           docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
-          docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG 
+          docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
+
+      # Zip the required file
+      - name: Zip files for Deployment
+        if: success()
+        run: |
+          zip -r deployement.zip appspec.yml deploy/scripts/install_dependencies.sh deploy/scripts/start_docker.sh
+
+      # Upload the zip file to s3
+      - name: Upload zip file to s3
+        if: success()
+        run: |
+          aws s3 cp deployement.zip s3://swiggy-delivery-time-prediction-s3/deployement.zip
+
+      # Deploy to AWS Codedeploy using uploaded zip file
+      - name: Deploy to AWS Code deploy
+        if: success()
+        run: |
+          aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws deploy create-deployment \
+          --application-name SwiggyCodeDeploy \
+          --deployment-config-name CodeDeployDefault.OneAtATime \
+          --deployment-group-name SwiggyDeployementGroup \
+          --s3-location bucket=swiggy-delivery-time-prediction-s3,key=deployement.zip,bundleType=zip \
+          --file-exists-behavior OVERWRITE \
+          --region us-east-1
