@@ -3,6 +3,7 @@ import mlflow
 import joblib
 import json
 import dagshub
+import os
 
 import pandas as pd
 
@@ -13,6 +14,17 @@ from sklearn import set_config
 from pathlib import Path
 from mlflow import MlflowClient
 from scripts.data_clean_utils import perform_data_cleaning
+from dotenv import load_dotenv
+
+load_dotenv()
+
+dagshub_token=os.getenv('DAGSHUB_TOKEN')
+dagshub.auth.add_app_token(dagshub_token)
+
+# dagshub initialization
+dagshub.init(repo_owner='jay-kanakia', repo_name='swiggy_delivery_time_prediction', mlflow=True)
+# set tracking uri
+mlflow.set_tracking_uri('https://dagshub.com/jay-kanakia/swiggy_delivery_time_prediction.mlflow')
 
 class Data(BaseModel):
 
@@ -54,12 +66,7 @@ run_info = load_model_infomation("run_information.json")
 model_name = run_info['model_name']
 
 # stage of the model
-stage = 'Staging'
-
-# dagshub initialization
-dagshub.init(repo_owner='jay-kanakia', repo_name='swiggy_delivery_time_prediction', mlflow=True)
-# set tracking uri
-mlflow.set_tracking_uri('https://dagshub.com/jay-kanakia/swiggy_delivery_time_prediction.mlflow')
+stage = 'Production'
 
 # get the latest model version
 client = MlflowClient()
@@ -72,7 +79,7 @@ model_path = f"models:/{model_name}/{stage}"
 model = mlflow.sklearn.load_model(model_path)
 
 # load the preprocessor
-preprocessor_path = "models\preprocessor.joblib"
+preprocessor_path = "models/preprocessor.joblib"
 preprocessor = load_model(preprocessor_path)
 
 # build the model pipeline
@@ -129,4 +136,4 @@ def do_prediction(data:Data):
     return prediction
 
 if __name__ == "__main__":
-    uvicorn.run(app="app:app")
+    uvicorn.run(app="app:app",host="0.0.0.0",port=8000)
